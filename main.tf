@@ -15,13 +15,23 @@ provider "azurerm" {
 #
 
 
-module "vnet" {
-  source               = "github.com/Prajwal-JA/terraform-poc.git"
-  resource_group_name  = "Collabnix-RG"
-  location             = "East US"
-  virtual_network_name = "Collabnix-Vnet"
-  vnet_address_range   = "10.0.0.0/16"
-  subnet_name          = "Webserver-Subnet"
-  subnet_address_range = "10.0.1.0/24"
+resource "azurerm_resource_group" "rg" {
+    name        =   var.resource_group_name
+    location    =   var.location
+    tags        =   {
+        "project"       =   "Collabnix"
+        "deployed_with" =   "Terraform"
+    }
+}
+
+resource "azurerm_virtual_network" "vnet" {
+  resource_group_name   =   azurerm_resource_group.rg.name
+  name                  =   var.virtual_network_name
+  location              =   azurerm_resource_group.rg.location
+  address_space         =   [var.vnet_address_range]
+   tags                 =   {
+        "project"       =   "Collabnix"
+        "deployed_with" =   "Terraform"
+    }
 
 }
