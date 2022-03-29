@@ -15,13 +15,10 @@ provider "azurerm" {
 #
 
 
-resource "azurerm_resource_group" "rg" {
-    name        =   var.resource_group_name
+resource "azurerm_resource_group" "myrg" {
+    name        =   var.RGName
     location    =   var.location
-    tags        =   {
-        "project"       =   "Collabnix"
-        "deployed_with" =   "Terraform"
-    }
+
 }
 
 
